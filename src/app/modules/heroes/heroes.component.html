@@ -1,5 +1,55 @@
 <main class="heroes">
-	<h2>My Heroes</h2>
+	<!-- Table -->
+	<table mat-table [dataSource]="dataSources()" class="heroes__table">
+		<!-- Position Column -->
+		<ng-container matColumnDef="id">
+			<th mat-header-cell *matHeaderCellDef>ID</th>
+			<td mat-cell *matCellDef="let element">{{ element.id }}</td>
+		</ng-container>
 
-	<router-outlet />
+		<!-- Name Column -->
+		<ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef>Name</th>
+			<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+		</ng-container>
+
+		<!-- Gender Column -->
+		<ng-container matColumnDef="gender">
+			<th mat-header-cell *matHeaderCellDef>Gender</th>
+			<td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+		</ng-container>
+
+		<!-- Actions Column -->
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef>Actions</th>
+			<td mat-cell *matCellDef="let element">
+				<section class="heroes__table__actions">
+					<!-- Edit Hero -->
+					<button
+						mat-icon-button
+						color="primary"
+						matTooltip="Edit Hero"
+						(click)="editHero({ heroId: element.id })"
+					>
+						<mat-icon>edit</mat-icon>
+					</button>
+					<!-- Remove Hero -->
+					<button
+						mat-icon-button
+						color="warn"
+						matTooltip="Remove Hero"
+						(click)="removeHero({ heroId: element.id })"
+					>
+						<mat-icon>delete</mat-icon>
+					</button>
+				</section>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+
+	<!-- Pagination -->
+	<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
 </main>

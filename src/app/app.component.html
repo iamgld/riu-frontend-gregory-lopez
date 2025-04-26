@@ -1,11 +1,14 @@
 <main class="app">
 	<!-- Toolbar -->
-	<mat-toolbar>
-		<span routerLink="/heroes">Heroes</span>
-		<span class="example-spacer"></span>
+	<mat-toolbar class="toolbar">
+		<section class="toolbar__section">
+			<span routerLink="/heroes">Heroes</span>
 
-		<button mat-button routerLink="/heroes">heroes</button>
-		<button mat-button routerLink="/heroes/new">new hero</button>
+			<span class="toolbar__spacer"></span>
+
+			<button mat-button routerLink="/heroes">heroes</button>
+			<button mat-button routerLink="/heroes/new">new hero</button>
+		</section>
 	</mat-toolbar>
 
 	<!-- Router Outlet -->

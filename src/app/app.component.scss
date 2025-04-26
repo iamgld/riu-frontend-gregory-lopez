@@ -1,5 +1,18 @@
 @use 'styles';
 
-.example-spacer {
-	flex: 1 1 auto;
+// .app {
+// }
+
+.toolbar {
+	&__section {
+		max-width: var(--gld-max-width);
+		margin-inline: auto;
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+
+	&__spacer {
+		flex: 1 1 auto;
+	}
 }
