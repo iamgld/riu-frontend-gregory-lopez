@@ -1,1 +1,5 @@
-@use 'styles' as styles;
+@use 'styles';
+
+.example-spacer {
+	flex: 1 1 auto;
+}
