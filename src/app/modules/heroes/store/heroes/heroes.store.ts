@@ -1,17 +1,16 @@
 // Store Imports
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals'
 
-export interface UiState {
+export interface HeroesState {
 	showSidenav: boolean
 }
 
-export const initialState: UiState = {
+export const heroesInitialState: HeroesState = {
 	showSidenav: false,
 }
 
-export const UiStore = signalStore(
-	{ providedIn: 'root' },
-	withState(initialState),
+export const HeroesStore = signalStore(
+	withState(heroesInitialState),
 	withMethods((store) => ({
 		openSidenav: (): void => {
 			patchState(store, () => ({ showSidenav: true }))
