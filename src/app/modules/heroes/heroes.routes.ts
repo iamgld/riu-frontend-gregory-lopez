@@ -5,28 +5,26 @@ import { HeroesComponent } from './heroes.component'
 import { EditHeroComponent, HeroComponent, NewHeroComponent } from './views'
 import { HeroesService } from './services'
 
-const services = [HeroesService]
-
 export const HEROES_ROUTES: Routes = [
 	{
 		path: '',
 		component: HeroesComponent,
-		providers: [...services],
+		providers: [HeroesService],
 	},
 	{
 		path: 'new',
 		component: NewHeroComponent,
-		providers: [...services],
+		providers: [HeroesService],
 	},
 	{
 		path: ':id',
 		component: HeroComponent,
-		providers: [...services],
+		providers: [HeroesService],
 	},
 	{
 		path: ':id/edit',
 		component: EditHeroComponent,
-		providers: [...services],
+		providers: [HeroesService],
 	},
 	{
 		path: '**',

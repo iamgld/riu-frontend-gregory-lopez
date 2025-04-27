@@ -18,9 +18,9 @@ import { MatTableDataSource } from '@angular/material/table'
 	styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent implements AfterViewInit {
-	#heroesService = inject(HeroesService)
-	#destroyRef = inject(DestroyRef)
-	#router = inject(Router)
+	readonly #heroesService = inject(HeroesService)
+	readonly #destroyRef = inject(DestroyRef)
+	readonly #router = inject(Router)
 
 	displayedColumns: string[] = ['id', 'name', 'gender', 'actions']
 	dataSources = signal(new MatTableDataSource<Datasource>([]))
