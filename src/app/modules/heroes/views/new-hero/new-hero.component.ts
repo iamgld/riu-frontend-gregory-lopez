@@ -79,7 +79,7 @@ export class NewHeroComponent {
 				id: Number(this.form.value.id),
 				name: this.form.value.name ?? '',
 				slug: this.form.value.slug ?? '',
-				gender: (this.form.value.gender as HeroGender) ?? HeroGender.unknown,
+				gender: this.form.value.gender as HeroGender,
 				image: this.form.value.image ?? '',
 				work: this.form.value.work ?? '',
 				biography: {

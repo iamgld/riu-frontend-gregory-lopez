@@ -20,6 +20,18 @@ export class HeroesService {
 		return this.#heroes.asObservable()
 	}
 
+	getHero({ heroId }: { heroId: number }) {
+		const currentHero = this.#heroes.value.find((_hero) => _hero.id === heroId)
+
+		if (!currentHero) {
+			return throwError(() => ({
+				errorCode: 'heroId',
+				message: `A hero with this id doesn't exists!`,
+			}))
+		}
+		return of({ hero: currentHero })
+	}
+
 	addHero({ hero }: { hero: Hero }): Observable<{ message: string }> {
 		const currentHeroes = this.#heroes.value
 		const existsId = currentHeroes.some((_hero) => _hero.id === hero.id)
@@ -38,6 +50,30 @@ export class HeroesService {
 		}
 		this.#heroes.next([hero, ...currentHeroes])
 		return of({ message: 'Hero added successfully!' })
+	}
+
+	editHero({ hero }: { hero: Hero }) {
+		const currentHero = this.#heroes.value.find((_hero) => _hero.id === hero.id)
+		const currentHeroesWithoutCurrentHero = this.#heroes.value.filter(
+			(_hero) => _hero.id !== hero.id,
+		)
+		const existsSlug = currentHeroesWithoutCurrentHero.some((_hero) => _hero.slug === hero.slug)
+
+		if (!currentHero) {
+			return throwError(() => ({
+				errorCode: 'heroId',
+				message: `A hero with this id doesn't exists!`,
+			}))
+		}
+		if (existsSlug) {
+			return throwError(() => ({
+				errorCode: 'slug',
+				message: 'A hero with this Slug already exists!',
+			}))
+		}
+
+		this.#heroes.next([hero, ...currentHeroesWithoutCurrentHero])
+		return of({ message: 'Hero edited successfully!' })
 	}
 
 	removeHero({ heroId }: { heroId: number }): void {

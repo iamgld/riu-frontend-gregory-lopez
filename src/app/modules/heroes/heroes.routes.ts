@@ -19,11 +19,11 @@ export const HEROES_ROUTES: Routes = [
 				component: NewHeroComponent,
 			},
 			{
-				path: ':id',
+				path: ':heroId',
 				component: HeroComponent,
 			},
 			{
-				path: ':id/edit',
+				path: ':heroId/edit',
 				component: EditHeroComponent,
 			},
 		],

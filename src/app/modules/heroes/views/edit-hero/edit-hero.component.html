@@ -1,1 +1,300 @@
-<p>edit-heroe works!</p>
+<article class="edit">
+	<!-- Header -->
+	<header
+		class="edit__header"
+		[class.edit__header--center]="invalidHeroId()"
+		[class.edit__header--center]="!this.currentHero() ? true : false"
+	>
+		@if (invalidHeroId()) {
+			<h2 class="edit__title">The hero id is invalid</h2>
+		}
+		@if (!currentHero()) {
+			<h2 class="edit__title">The hero with this id doesn't exists</h2>
+		}
+		@if (currentHero()) {
+			<h2 class="edit__title">Hero {{ currentHero()?.id }}</h2>
+
+			<button mat-flat-button (click)="submit()">Edit Hero</button>
+		}
+	</header>
+
+	@if (!invalidHeroId() && currentHero()) {
+		<!-- Form General -->
+		<h3 class="edit__subtitle">General</h3>
+		<section class="edit__form" [formGroup]="form">
+			<!-- Id -->
+			<mat-form-field appearance="outline">
+				<mat-label>Id</mat-label>
+				<input matInput name="id" formControlName="id" aria-label="id" placeholder="0000" />
+				<mat-error>
+					@if (form.controls.id.hasError('required')) {
+						This field is required!
+					}
+					@if (form.controls.id.hasError('min')) {
+						The minimum allowed value is {{ form.controls.id.errors?.['min'].min }}!
+					}
+					@if (form.controls.id.hasError('max')) {
+						The maximum allowed value is {{ form.controls.id.errors?.['max'].max }}!
+					}
+					@if (form.controls.id.hasError('naturalNumber')) {
+						{{ form.controls.id.errors?.['naturalNumber'] }}!
+					}
+				</mat-error>
+			</mat-form-field>
+			<!-- Slug -->
+			<mat-form-field appearance="outline">
+				<mat-label>Slug</mat-label>
+				<input
+					matInput
+					name="slug"
+					formControlName="slug"
+					aria-label="slug"
+					placeholder="20-angel-dust"
+				/>
+				<mat-error>
+					@if (form.controls.slug.hasError('required')) {
+						This field is required!
+					}
+					@if (form.controls.slug.hasError('slug')) {
+						{{ form.controls.slug.errors?.['slug'] }}!
+					}
+				</mat-error>
+			</mat-form-field>
+			<!-- Name -->
+			<mat-form-field appearance="outline">
+				<mat-label>Name</mat-label>
+				<input
+					matInput
+					name="name"
+					formControlName="name"
+					aria-label="name"
+					placeholder="Angel Dust"
+				/>
+				<mat-error>
+					@if (form.controls.name.hasError('required')) {
+						This field is required!
+					}
+					@if (form.controls.name.hasError('minlength')) {
+						This field must have a minimum of
+						{{ form.controls.name.errors?.['minlength'].requiredLength }}
+						characters!
+					}
+					@if (form.controls.name.hasError('maxlength')) {
+						This field must have a maximum of
+						{{ form.controls.name.errors?.['maxlength'].requiredLength }}
+						characters!
+					}
+				</mat-error>
+			</mat-form-field>
+			<!-- Gender -->
+			<mat-form-field appearance="outline">
+				<mat-label>Gender</mat-label>
+				<mat-select formControlName="gender" aria-label="gender" placeholder="Female">
+					<mat-option [value]="HeroGender.male">Male</mat-option>
+					<mat-option [value]="HeroGender.female">Female</mat-option>
+				</mat-select>
+				<mat-error>
+					@if (form.controls.gender.hasError('required')) {
+						This field is required!
+					}
+				</mat-error>
+			</mat-form-field>
+			<!-- Image -->
+			<mat-form-field appearance="outline">
+				<mat-label>Image</mat-label>
+				<input
+					matInput
+					type="url"
+					name="image"
+					formControlName="image"
+					aria-label="image"
+					placeholder="https://example.com/image.jpg"
+				/>
+				<mat-error>
+					@if (form.controls.image.hasError('required')) {
+						This field is required!
+					}
+					@if (form.controls.image.hasError('url')) {
+						{{ form.controls.image.errors?.['url'] }}!
+					}
+				</mat-error>
+			</mat-form-field>
+			<!-- Work -->
+			<mat-form-field appearance="outline">
+				<mat-label>Work</mat-label>
+				<input
+					matInput
+					name="work"
+					formControlName="work"
+					aria-label="work"
+					placeholder="Mercenary"
+				/>
+				<mat-error>
+					@if (form.controls.work.hasError('required')) {
+						This field is required!
+					}
+					@if (form.controls.work.hasError('minlength')) {
+						This field must have a minimum of
+						{{ form.controls.work.errors?.['minlength'].requiredLength }}
+						characters!
+					}
+					@if (form.controls.work.hasError('maxlength')) {
+						This field must have a maximum of
+						{{ form.controls.work.errors?.['maxlength'].requiredLength }}
+						characters!
+					}
+				</mat-error>
+			</mat-form-field>
+		</section>
+
+		<!-- Form Biography -->
+		<h3 class="edit__subtitle">Biography</h3>
+		<section class="edit__form" [formGroup]="form">
+			<ng-container formGroupName="biography">
+				<!-- Full Name -->
+				<mat-form-field appearance="outline">
+					<mat-label>Full Name</mat-label>
+					<input
+						matInput
+						name="fullName"
+						formControlName="fullName"
+						aria-label="fullName"
+						placeholder="Christina"
+					/>
+					<mat-error>
+						@if (form.controls.biography.controls.fullName.hasError('required')) {
+							This field is required!
+						}
+						@if (form.controls.biography.controls.fullName.hasError('minlength')) {
+							This field must have a minimum of
+							{{ form.controls.biography.controls.fullName.errors?.['minlength'].requiredLength }}
+							characters!
+						}
+						@if (form.controls.biography.controls.fullName.hasError('maxlength')) {
+							This field must have a maximum of
+							{{ form.controls.biography.controls.fullName.errors?.['maxlength'].requiredLength }}
+							characters!
+						}
+					</mat-error>
+				</mat-form-field>
+				<!-- Alter Egos -->
+				<mat-form-field appearance="outline">
+					<mat-label>Alter Egos</mat-label>
+					<input
+						matInput
+						name="alterEgos"
+						formControlName="alterEgos"
+						aria-label="alterEgos"
+						placeholder="Archangel"
+					/>
+					<mat-error>
+						@if (form.controls.biography.controls.alterEgos.hasError('required')) {
+							This field is required!
+						}
+						@if (form.controls.biography.controls.alterEgos.hasError('minlength')) {
+							This field must have a minimum of
+							{{ form.controls.biography.controls.alterEgos.errors?.['minlength'].requiredLength }}
+							characters!
+						}
+						@if (form.controls.biography.controls.alterEgos.hasError('maxlength')) {
+							This field must have a maximum of
+							{{ form.controls.biography.controls.alterEgos.errors?.['maxlength'].requiredLength }}
+							characters!
+						}
+					</mat-error>
+				</mat-form-field>
+				<!-- First Appearance -->
+				<mat-form-field appearance="outline">
+					<mat-label>First Appearance</mat-label>
+					<input
+						matInput
+						name="firstAppearance"
+						formControlName="firstAppearance"
+						aria-label="firstAppearance"
+						placeholder="Morlocks #1 (2002)"
+					/>
+					<mat-error>
+						@if (form.controls.biography.controls.firstAppearance.hasError('required')) {
+							This field is required!
+						}
+						@if (form.controls.biography.controls.firstAppearance.hasError('minlength')) {
+							This field must have a minimum of
+							{{
+								form.controls.biography.controls.firstAppearance.errors?.['minlength']
+									.requiredLength
+							}}
+							characters!
+						}
+						@if (form.controls.biography.controls.firstAppearance.hasError('maxlength')) {
+							This field must have a maximum of
+							{{
+								form.controls.biography.controls.firstAppearance.errors?.['maxlength']
+									.requiredLength
+							}}
+							characters!
+						}
+					</mat-error>
+				</mat-form-field>
+				<!-- Publisher -->
+				<mat-form-field appearance="outline">
+					<mat-label>Publisher</mat-label>
+					<input
+						matInput
+						name="publisher"
+						formControlName="publisher"
+						aria-label="publisher"
+						placeholder="Marvel Comics"
+					/>
+					<mat-error>
+						@if (form.controls.biography.controls.publisher.hasError('required')) {
+							This field is required!
+						}
+						@if (form.controls.biography.controls.publisher.hasError('minlength')) {
+							This field must have a minimum of
+							{{ form.controls.biography.controls.publisher.errors?.['minlength'].requiredLength }}
+							characters!
+						}
+						@if (form.controls.biography.controls.publisher.hasError('maxlength')) {
+							This field must have a maximum of
+							{{ form.controls.biography.controls.publisher.errors?.['maxlength'].requiredLength }}
+							characters!
+						}
+					</mat-error>
+				</mat-form-field>
+				<!-- Aliases -->
+				<mat-form-field appearance="outline" class="span-2">
+					<mat-label>Aliases</mat-label>
+					<mat-chip-grid #chipGrid>
+						@for (alias of aliases(); track alias) {
+							<mat-chip-row
+								(removed)="removeAlias(alias)"
+								[editable]="true"
+								(edited)="editAlias(alias, $event)"
+							>
+								{{ alias }}
+								<button matChipRemove>
+									<mat-icon>cancel</mat-icon>
+								</button>
+							</mat-chip-row>
+						}
+						<input
+							matInput
+							name="aliases"
+							aria-label="aliases"
+							placeholder="New alias..."
+							[matChipInputFor]="chipGrid"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+							[matChipInputAddOnBlur]="addOnBlur"
+							(matChipInputTokenEnd)="addAlias($event)"
+						/>
+					</mat-chip-grid>
+					<mat-error>
+						@if (!aliases().length) {
+							This field is required!
+						}
+					</mat-error>
+				</mat-form-field>
+			</ng-container>
+		</section>
+	}
+</article>

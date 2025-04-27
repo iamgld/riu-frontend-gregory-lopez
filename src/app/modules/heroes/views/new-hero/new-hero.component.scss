@@ -31,14 +31,3 @@
 		}
 	}
 }
-
-::ng-deep .mdc-snackbar {
-	&.snackbar-green .mat-mdc-snackbar-surface {
-		background: var(--gld-green) !important;
-		color: var(--gld-whitelight) !important;
-	}
-	&.snackbar-red .mat-mdc-snackbar-surface {
-		background: var(--gld-red) !important;
-		color: var(--gld-whitelight) !important;
-	}
-}
