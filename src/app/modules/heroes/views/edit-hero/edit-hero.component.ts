@@ -8,6 +8,7 @@ import {
 	numberAttribute,
 	signal,
 	afterNextRender,
+	DestroyRef,
 } from '@angular/core'
 import {
 	FormControl,
@@ -16,6 +17,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips'
@@ -40,6 +42,7 @@ export class EditHeroComponent {
 	readonly #heroesService = inject(HeroesService)
 	readonly #router = inject(Router)
 	readonly #snackBar = inject(MatSnackBar)
+	readonly #destroyRef = inject(DestroyRef)
 
 	readonly HeroGender = HeroGender
 	readonly addOnBlur = true
@@ -158,27 +161,30 @@ export class EditHeroComponent {
 	}
 
 	#editHero({ hero }: { hero: Hero }) {
-		this.#heroesService.editHero({ hero }).subscribe({
-			next: ({ message }) => {
-				this.#openSnackBar({ message, duration: 3000, panelClass: ['snackbar-green'] })
-				this.#router.navigate(['/heroes'])
-			},
-			error: (error) => {
-				if (error.errorCode === 'heroId') {
-					this.form.controls.id.reset(String(this.currentHero()?.id))
-					this.form.controls.id.markAsTouched()
-				}
-				if (error.errorCode === 'slug') {
-					this.form.controls.slug.reset(String(this.currentHero()?.slug))
-					this.form.controls.slug.markAsTouched()
-				}
-				this.#openSnackBar({
-					message: error.message,
-					duration: 8000,
-					panelClass: ['snackbar-red'],
-				})
-			},
-		})
+		this.#heroesService
+			.editHero({ hero })
+			.pipe(takeUntilDestroyed(this.#destroyRef))
+			.subscribe({
+				next: ({ message }) => {
+					this.#openSnackBar({ message, duration: 3000, panelClass: ['snackbar-green'] })
+					this.#router.navigate(['/heroes'])
+				},
+				error: (error) => {
+					if (error.errorCode === 'heroId') {
+						this.form.controls.id.reset(String(this.currentHero()?.id))
+						this.form.controls.id.markAsTouched()
+					}
+					if (error.errorCode === 'slug') {
+						this.form.controls.slug.reset(String(this.currentHero()?.slug))
+						this.form.controls.slug.markAsTouched()
+					}
+					this.#openSnackBar({
+						message: error.message,
+						duration: 8000,
+						panelClass: ['snackbar-red'],
+					})
+				},
+			})
 	}
 
 	#openSnackBar({

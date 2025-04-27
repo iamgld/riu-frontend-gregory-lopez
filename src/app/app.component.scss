@@ -10,6 +10,12 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
+
+		&__title {
+			margin: 0;
+			font: 600 var(--gld-font-size--heading-two) / var(--gld-line-height) var(--gld-font--poppins);
+			cursor: pointer;
+		}
 	}
 
 	&__spacer {

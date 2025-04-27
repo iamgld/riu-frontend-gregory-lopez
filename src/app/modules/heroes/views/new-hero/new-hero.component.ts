@@ -1,5 +1,5 @@
 // Angular Imports
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core'
 import {
 	FormControl,
 	FormGroup,
@@ -7,6 +7,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips'
@@ -31,11 +32,12 @@ export class NewHeroComponent {
 	readonly #heroesService = inject(HeroesService)
 	readonly #router = inject(Router)
 	readonly #snackBar = inject(MatSnackBar)
+	readonly #destroyRef = inject(DestroyRef)
 
 	readonly HeroGender = HeroGender
 	readonly addOnBlur = true
 	readonly separatorKeysCodes = [ENTER, COMMA] as const
-	readonly aliases = signal<string[]>([])
+	readonly aliases = signal<string[]>(['batman'])
 
 	form: FormGroup<Form> = this.#fb.group<Form>({
 		id: this.#fb.control('111', {
@@ -138,27 +140,30 @@ export class NewHeroComponent {
 	}
 
 	#addNewHero({ hero }: { hero: Hero }) {
-		this.#heroesService.addHero({ hero }).subscribe({
-			next: ({ message }) => {
-				this.#openSnackBar({ message, duration: 3000, panelClass: ['snackbar-green'] })
-				this.#router.navigate(['/heroes'])
-			},
-			error: (error) => {
-				if (error.errorCode === 'id') {
-					this.form.controls.id.reset()
-					this.form.controls.id.markAsTouched()
-				}
-				if (error.errorCode === 'slug') {
-					this.form.controls.slug.reset()
-					this.form.controls.slug.markAsTouched()
-				}
-				this.#openSnackBar({
-					message: error.message,
-					duration: 8000,
-					panelClass: ['snackbar-red'],
-				})
-			},
-		})
+		this.#heroesService
+			.addHero({ hero })
+			.pipe(takeUntilDestroyed(this.#destroyRef))
+			.subscribe({
+				next: ({ message }) => {
+					this.#openSnackBar({ message, duration: 3000, panelClass: ['snackbar-green'] })
+					this.#router.navigate(['/heroes'])
+				},
+				error: (error) => {
+					if (error.errorCode === 'id') {
+						this.form.controls.id.reset()
+						this.form.controls.id.markAsTouched()
+					}
+					if (error.errorCode === 'slug') {
+						this.form.controls.slug.reset()
+						this.form.controls.slug.markAsTouched()
+					}
+					this.#openSnackBar({
+						message: error.message,
+						duration: 8000,
+						panelClass: ['snackbar-red'],
+					})
+				},
+			})
 	}
 
 	#openSnackBar({

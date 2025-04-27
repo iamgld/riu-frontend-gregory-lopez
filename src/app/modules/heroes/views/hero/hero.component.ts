@@ -8,6 +8,7 @@ import {
 	numberAttribute,
 	signal,
 	afterNextRender,
+	DestroyRef,
 } from '@angular/core'
 import {
 	FormControl,
@@ -16,6 +17,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips'
@@ -40,6 +42,7 @@ export class HeroComponent {
 	readonly #heroesService = inject(HeroesService)
 	readonly #router = inject(Router)
 	readonly #snackBar = inject(MatSnackBar)
+	readonly #destroyRef = inject(DestroyRef)
 
 	readonly HeroGender = HeroGender
 	readonly addOnBlur = true
@@ -184,20 +187,23 @@ export class HeroComponent {
 	}
 
 	#getHero({ heroId }: { heroId: number }) {
-		this.#heroesService.getHero({ heroId }).subscribe({
-			next: ({ hero }) => {
-				// console.log('hero', hero)
-				this.currentHero.set(hero)
-				this.#updateForm({ hero })
-			},
-			error: (error) => {
-				this.#openSnackBar({
-					message: error.message,
-					duration: 8000,
-					panelClass: ['snackbar-red'],
-				})
-			},
-		})
+		this.#heroesService
+			.getHero({ heroId })
+			.pipe(takeUntilDestroyed(this.#destroyRef))
+			.subscribe({
+				next: ({ hero }) => {
+					// console.log('hero', hero)
+					this.currentHero.set(hero)
+					this.#updateForm({ hero })
+				},
+				error: (error) => {
+					this.#openSnackBar({
+						message: error.message,
+						duration: 8000,
+						panelClass: ['snackbar-red'],
+					})
+				},
+			})
 	}
 
 	#updateForm({ hero }: { hero: Hero }) {
