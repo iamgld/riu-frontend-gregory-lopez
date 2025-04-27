@@ -44,6 +44,7 @@ export class HeroesComponent implements AfterViewInit {
 			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
 				next: (heroes) => {
+					// console.log({ heroes })
 					this.#updateDatasource({ heroes })
 				},
 				error: (error) => {

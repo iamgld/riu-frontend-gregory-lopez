@@ -5,7 +5,7 @@ import { Hero } from '@heroes/models'
 import { heroAdapter, HeroFromData } from './heroes.adapter'
 import { heroes as heroesData } from './heroes.data'
 // Thirdparty Imports
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs'
 
 @Injectable()
 export class HeroesService {
@@ -16,12 +16,28 @@ export class HeroesService {
 	}
 
 	getHeroes(): Observable<Hero[]> {
+		// console.log('heroes', this.#heroes.value)
 		return this.#heroes.asObservable()
 	}
 
-	addHero({ hero }: { hero: Hero }): void {
+	addHero({ hero }: { hero: Hero }): Observable<{ message: string }> {
 		const currentHeroes = this.#heroes.value
-		this.#heroes.next([...currentHeroes, hero])
+		const existsId = currentHeroes.some((_hero) => _hero.id === hero.id)
+		const existsSlug = currentHeroes.some((_hero) => _hero.slug === hero.slug)
+		if (existsId) {
+			return throwError(() => ({
+				errorCode: 'id',
+				message: 'A hero with this ID already exists!',
+			}))
+		}
+		if (existsSlug) {
+			return throwError(() => ({
+				errorCode: 'slug',
+				message: 'A hero with this Slug already exists!',
+			}))
+		}
+		this.#heroes.next([hero, ...currentHeroes])
+		return of({ message: 'Hero added successfully!' })
 	}
 
 	removeHero({ heroId }: { heroId: number }): void {
@@ -31,6 +47,7 @@ export class HeroesService {
 	}
 
 	#getHeroesFromData(): void {
+		// console.log('set initial heroes')
 		const heroes: Hero[] = heroesData.map((hero: HeroFromData) => heroAdapter(hero))
 		this.#heroes.next(heroes)
 	}

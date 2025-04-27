@@ -8,23 +8,25 @@ import { HeroesService } from './services'
 export const HEROES_ROUTES: Routes = [
 	{
 		path: '',
-		component: HeroesComponent,
 		providers: [HeroesService],
-	},
-	{
-		path: 'new',
-		component: NewHeroComponent,
-		providers: [HeroesService],
-	},
-	{
-		path: ':id',
-		component: HeroComponent,
-		providers: [HeroesService],
-	},
-	{
-		path: ':id/edit',
-		component: EditHeroComponent,
-		providers: [HeroesService],
+		children: [
+			{
+				path: '',
+				component: HeroesComponent,
+			},
+			{
+				path: 'new',
+				component: NewHeroComponent,
+			},
+			{
+				path: ':id',
+				component: HeroComponent,
+			},
+			{
+				path: ':id/edit',
+				component: EditHeroComponent,
+			},
+		],
 	},
 	{
 		path: '**',

@@ -1,6 +1,7 @@
 .new {
 	max-width: var(--gld-max-width);
 	margin: var(--gld-spacing--l) auto;
+	padding-inline: var(--gld-spacing--m);
 
 	&__header {
 		display: flex;
@@ -28,5 +29,16 @@
 		.span-2 {
 			grid-column: span 2;
 		}
+	}
+}
+
+::ng-deep .mdc-snackbar {
+	&.snackbar-green .mat-mdc-snackbar-surface {
+		background: var(--gld-green) !important;
+		color: var(--gld-whitelight) !important;
+	}
+	&.snackbar-red .mat-mdc-snackbar-surface {
+		background: var(--gld-red) !important;
+		color: var(--gld-whitelight) !important;
 	}
 }
