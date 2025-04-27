@@ -15,8 +15,18 @@ export class HeroesService {
 		this.#getHeroesFromData()
 	}
 
-	getHeroes(): Observable<{ heroes: Hero[] }> {
-		return of({ heroes: this.#heroes.value })
+	getHeroes(options: { filterBy?: string } = {}): Observable<{ heroes: Hero[] }> {
+		const { filterBy } = options
+
+		if (!filterBy) return of({ heroes: this.#heroes.value })
+
+		const heroesFiltered = this.#heroes.value.filter(
+			(_hero) =>
+				String(_hero.id).includes(filterBy) ||
+				String(_hero.slug).includes(filterBy) ||
+				String(_hero.name).includes(filterBy),
+		)
+		return of({ heroes: heroesFiltered })
 	}
 
 	getHero({ heroId }: { heroId: number }): Observable<{ hero: Hero }> {

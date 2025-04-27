@@ -1,4 +1,20 @@
 <main class="heroes">
+	<!-- Header -->
+	<header class="heroes__header">
+		<h2 class="heroes__title">Type a name and search your favorite hero</h2>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Search your hero</mat-label>
+			<input
+				matInput
+				name="search"
+				aria-label="search"
+				placeholder="Batman..."
+				[formControl]="searchControl"
+			/>
+		</mat-form-field>
+	</header>
+
 	<!-- Table -->
 	<table mat-table [dataSource]="dataSources()" class="heroes__table">
 		<!-- Position Column -->

@@ -3,6 +3,18 @@
 	margin: var(--gld-spacing--l) auto;
 	padding-inline: var(--gld-spacing--m);
 
+	&__header {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: var(--gld-spacing--m);
+	}
+
+	&__title {
+		margin: 0;
+		margin-bottom: var(--gld-spacing--m);
+		font: 400 var(--gld-font-size--heading-three) / var(--gld-line-height) var(--gld-font--poppins);
+	}
+
 	&__table {
 		width: 100%;
 

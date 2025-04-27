@@ -1,7 +1,8 @@
 // Angular Imports
 import { Component, DestroyRef, inject, signal, viewChild, afterNextRender } from '@angular/core'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Router } from '@angular/router'
+import { FormControl, ReactiveFormsModule } from '@angular/forms'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatDialog } from '@angular/material/dialog'
@@ -12,11 +13,13 @@ import { Hero } from '@heroes/models'
 import { ConfirmRemoveHeroComponent } from '@heroes/components'
 // Shared Imports
 import { MaterialModule } from '@shared/modules'
+// Thirdparty Imports
+import { debounceTime } from 'rxjs'
 
 @Component({
 	standalone: true,
 	selector: 'app-heroes',
-	imports: [MaterialModule],
+	imports: [MaterialModule, ReactiveFormsModule],
 	templateUrl: './heroes.component.html',
 	styleUrls: ['./heroes.component.scss'],
 })
@@ -27,14 +30,23 @@ export class HeroesComponent {
 	readonly #dialog = inject(MatDialog)
 	readonly #snackBar = inject(MatSnackBar)
 
-	displayedColumns: string[] = ['id', 'name', 'gender', 'actions']
-	dataSources = signal(new MatTableDataSource<Datasource>([]))
-	paginator = viewChild(MatPaginator)
+	readonly displayedColumns: string[] = ['id', 'name', 'gender', 'actions']
+	readonly dataSources = signal(new MatTableDataSource<Datasource>([]))
+	readonly paginator = viewChild(MatPaginator)
+
+	readonly searchControl = new FormControl('')
 
 	constructor() {
 		afterNextRender(() => {
 			this.#getHeroes()
 		})
+
+		this.searchControl.valueChanges
+			.pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef))
+			.subscribe((value) => {
+				if (value) this.#getHeroes({ filterBy: value })
+				else this.#getHeroes()
+			})
 	}
 
 	viewHero({ heroId }: { heroId: number }) {
@@ -63,9 +75,9 @@ export class HeroesComponent {
 			})
 	}
 
-	#getHeroes() {
+	#getHeroes({ filterBy }: { filterBy: string } = { filterBy: '' }) {
 		this.#heroesService
-			.getHeroes()
+			.getHeroes({ filterBy })
 			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
 				next: ({ heroes }) => {
