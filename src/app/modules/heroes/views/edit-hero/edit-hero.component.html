@@ -8,7 +8,7 @@
 		@if (invalidHeroId()) {
 			<h2 class="edit__title">The hero id is invalid</h2>
 		}
-		@if (!currentHero()) {
+		@if (!invalidHeroId() && !currentHero()) {
 			<h2 class="edit__title">The hero with this id doesn't exists</h2>
 		}
 		@if (currentHero()) {
@@ -267,8 +267,8 @@
 					<mat-chip-grid #chipGrid>
 						@for (alias of aliases(); track alias) {
 							<mat-chip-row
-								(removed)="removeAlias(alias)"
 								[editable]="true"
+								(removed)="removeAlias(alias)"
 								(edited)="editAlias(alias, $event)"
 							>
 								{{ alias }}

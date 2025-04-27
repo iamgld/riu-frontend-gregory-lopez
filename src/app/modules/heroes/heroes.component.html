@@ -24,6 +24,15 @@
 			<th mat-header-cell *matHeaderCellDef>Actions</th>
 			<td mat-cell *matCellDef="let element">
 				<section class="heroes__table__actions">
+					<!-- View Hero -->
+					<button
+						mat-icon-button
+						color="primary"
+						matTooltip="View Hero"
+						(click)="viewHero({ heroId: element.id })"
+					>
+						<mat-icon>visibility</mat-icon>
+					</button>
 					<!-- Edit Hero -->
 					<button
 						mat-icon-button

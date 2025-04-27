@@ -30,6 +30,10 @@ export class HeroesComponent implements AfterViewInit {
 		this.#getHeroes()
 	}
 
+	viewHero({ heroId }: { heroId: number }) {
+		this.#router.navigate(['/heroes', heroId])
+	}
+
 	editHero({ heroId }: { heroId: number }) {
 		this.#router.navigate(['/heroes', heroId, 'edit'])
 	}

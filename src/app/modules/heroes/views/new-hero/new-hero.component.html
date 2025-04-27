@@ -252,8 +252,8 @@
 				<mat-chip-grid #chipGrid>
 					@for (alias of aliases(); track alias) {
 						<mat-chip-row
-							(removed)="removeAlias(alias)"
 							[editable]="true"
+							(removed)="removeAlias(alias)"
 							(edited)="editAlias(alias, $event)"
 						>
 							{{ alias }}

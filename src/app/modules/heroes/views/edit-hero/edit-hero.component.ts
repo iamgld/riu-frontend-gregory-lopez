@@ -7,7 +7,7 @@ import {
 	input,
 	numberAttribute,
 	signal,
-	OnInit,
+	afterNextRender,
 } from '@angular/core'
 import {
 	FormControl,
@@ -35,7 +35,7 @@ import { isNaturalNumberValidator, isSlugValidator, isUrlValidator } from '@shar
 	styleUrl: './edit-hero.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditHeroComponent implements OnInit {
+export class EditHeroComponent {
 	readonly #fb = inject(NonNullableFormBuilder)
 	readonly #heroesService = inject(HeroesService)
 	readonly #router = inject(Router)
@@ -87,8 +87,10 @@ export class EditHeroComponent implements OnInit {
 		}),
 	})
 
-	ngOnInit(): void {
-		if (!this.invalidHeroId()) this.#getHero({ heroId: this.heroId() })
+	constructor() {
+		afterNextRender(() => {
+			if (!this.invalidHeroId()) this.#getHero({ heroId: this.heroId() })
+		})
 	}
 
 	submit() {
