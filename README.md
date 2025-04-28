@@ -13,11 +13,11 @@ Este proyecto es una aplicación Angular para la gestión de héroes, desarrolla
 1. Clona el repositorio:
 
    ```sh
-   git clone https://github.com/iamgld/riu-challenge-gregory-lopez.git
+   git clone https://github.com/iamgld/riu-frontend-gregory-lopez.git
    ```
 
    ```sh
-   cd riu-challenge-gregory-lopez
+   cd riu-frontend-gregory-lopez
    ```
 
 2. Instala las dependencias:
@@ -70,7 +70,7 @@ La aplicación estará disponible en [http://localhost:4200](http://localhost:42
 
 ## Puntos adicionales implementados
 
-- [] Interceptor para mostrar un elemento de loading mientras se realiza alguna operación como “borrado” o “edición”
+- [x] Mostrar un elemento de loading mientras se realiza alguna operación como “borrado” o “edición”
 - [x] Directiva para que al crear o editar, en la caja de texto del nombre del héroe, siempre se muestre en mayúscula
 - [x] Comunicación entre componentes orientada a eventos
 - [x] Uso de programación reactiva
