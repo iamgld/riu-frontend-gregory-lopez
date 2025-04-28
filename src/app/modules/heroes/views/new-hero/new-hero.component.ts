@@ -17,12 +17,13 @@ import { Hero, HeroGender } from '@heroes/models'
 import { HeroesService } from '@heroes/services'
 // Shared Imports
 import { MaterialModule } from '@shared/modules'
+import { TransformToUppercaseDirective } from '@shared/directives'
 import { isNaturalNumberValidator, isSlugValidator, isUrlValidator } from '@shared/validators'
 
 @Component({
 	selector: 'app-new-hero',
 	standalone: true,
-	imports: [ReactiveFormsModule, MaterialModule],
+	imports: [ReactiveFormsModule, MaterialModule, TransformToUppercaseDirective],
 	templateUrl: './new-hero.component.html',
 	styleUrl: './new-hero.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
