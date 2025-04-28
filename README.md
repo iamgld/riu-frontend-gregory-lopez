@@ -5,7 +5,7 @@ Este proyecto es una aplicación Angular para la gestión de héroes, desarrolla
 ## Requisitos
 
 - Node.js >= 18.x
-- npm >= 9.x
+- pnpm >= 10.x
 - Angular CLI >= 18.x
 
 ## Instalación
