@@ -1,5 +1,13 @@
 // Angular Imports
-import { Component, DestroyRef, inject, signal, viewChild, afterNextRender } from '@angular/core'
+import {
+	Component,
+	DestroyRef,
+	inject,
+	signal,
+	viewChild,
+	afterNextRender,
+	ElementRef,
+} from '@angular/core'
 import { Router } from '@angular/router'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
@@ -14,7 +22,7 @@ import { ConfirmRemoveHeroComponent } from '@heroes/components'
 // Shared Imports
 import { MaterialModule } from '@shared/modules'
 // Thirdparty Imports
-import { debounceTime } from 'rxjs'
+import { debounceTime, finalize } from 'rxjs'
 
 @Component({
 	standalone: true,
@@ -34,7 +42,8 @@ export class HeroesComponent {
 	readonly dataSources = signal(new MatTableDataSource<Datasource>([]))
 	readonly paginator = viewChild(MatPaginator)
 
-	readonly searchControl = new FormControl('')
+	readonly searchControl = new FormControl<string>('')
+	readonly searchElement = viewChild.required<ElementRef<HTMLInputElement>>('searchElement')
 
 	constructor() {
 		afterNextRender(() => {
@@ -42,10 +51,11 @@ export class HeroesComponent {
 		})
 
 		this.searchControl.valueChanges
-			.pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef))
+			.pipe(debounceTime(500), takeUntilDestroyed(this.#destroyRef))
 			.subscribe((value) => {
-				if (value) this.#getHeroes({ filterBy: value })
-				else this.#getHeroes()
+				if (value) this.#getHeroes({ filterBy: value, focus: true })
+				else this.#getHeroes({ focus: true })
+				this.searchElement().nativeElement.blur()
 			})
 	}
 
@@ -75,7 +85,9 @@ export class HeroesComponent {
 			})
 	}
 
-	#getHeroes({ filterBy }: { filterBy: string } = { filterBy: '' }) {
+	#getHeroes(
+		{ filterBy, focus }: { filterBy?: string; focus?: boolean } = { filterBy: '', focus: false },
+	) {
 		this.#heroesService
 			.getHeroes({ filterBy })
 			.pipe(takeUntilDestroyed(this.#destroyRef))
@@ -83,6 +95,7 @@ export class HeroesComponent {
 				next: ({ heroes }) => {
 					// console.log({ heroes })
 					this.#updateDatasource({ heroes })
+					if (focus) this.searchElement().nativeElement.focus()
 				},
 				error: (error) => {
 					console.error('Error fetching heroes:', error)
@@ -110,11 +123,13 @@ export class HeroesComponent {
 	#removeHero({ heroId }: { heroId: number }) {
 		this.#heroesService
 			.removeHero({ heroId })
-			.pipe(takeUntilDestroyed(this.#destroyRef))
+			.pipe(
+				takeUntilDestroyed(this.#destroyRef),
+				finalize(() => this.#getHeroes()),
+			)
 			.subscribe({
 				next: ({ message }) => {
 					this.#openSnackBar({ message, duration: 3000, panelClass: ['snackbar-green'] })
-					this.#getHeroes()
 				},
 				error: (error) => {
 					this.#openSnackBar({

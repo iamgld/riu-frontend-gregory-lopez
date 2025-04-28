@@ -1,14 +1,18 @@
 // Angular Imports
-import { Injectable } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 // This Module Imports
 import { Hero } from '@heroes/models'
 import { heroAdapter, HeroFromData } from './heroes.adapter'
 import { heroes as heroesData } from './heroes.data'
+// Shared Imports
+import { LoaderService } from '@shared/services'
 // Thirdparty Imports
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs'
+import { BehaviorSubject, Observable, of, throwError, delay, tap, finalize } from 'rxjs'
 
 @Injectable()
 export class HeroesService {
+	readonly #loaderService = inject(LoaderService)
+
 	#heroes = new BehaviorSubject<Hero[]>([])
 
 	constructor() {
@@ -17,8 +21,7 @@ export class HeroesService {
 
 	getHeroes(options: { filterBy?: string } = {}): Observable<{ heroes: Hero[] }> {
 		const { filterBy } = options
-
-		if (!filterBy) return of({ heroes: this.#heroes.value })
+		if (!filterBy) return this.#of({ heroes: this.#heroes.value })
 
 		const heroesFiltered = this.#heroes.value.filter(
 			(_hero) =>
@@ -26,7 +29,7 @@ export class HeroesService {
 				String(_hero.slug).includes(filterBy) ||
 				String(_hero.name).includes(filterBy),
 		)
-		return of({ heroes: heroesFiltered })
+		return this.#of({ heroes: heroesFiltered })
 	}
 
 	getHero({ heroId }: { heroId: number }): Observable<{ hero: Hero }> {
@@ -38,7 +41,7 @@ export class HeroesService {
 				message: `A hero with this id doesn't exists!`,
 			}))
 		}
-		return of({ hero: currentHero })
+		return this.#of({ hero: currentHero })
 	}
 
 	addHero({ hero }: { hero: Hero }): Observable<{ message: string }> {
@@ -58,7 +61,7 @@ export class HeroesService {
 			}))
 		}
 		this.#heroes.next([hero, ...currentHeroes])
-		return of({ message: 'Hero added successfully!' })
+		return this.#of({ message: 'Hero added successfully!' })
 	}
 
 	editHero({ hero }: { hero: Hero }): Observable<{ message: string }> {
@@ -82,7 +85,7 @@ export class HeroesService {
 		}
 
 		this.#heroes.next([hero, ...currentHeroesWithoutCurrentHero])
-		return of({ message: 'Hero edited successfully!' })
+		return this.#of({ message: 'Hero edited successfully!' })
 	}
 
 	removeHero({ heroId }: { heroId: number }): Observable<{ message: string }> {
@@ -99,12 +102,20 @@ export class HeroesService {
 		}
 
 		this.#heroes.next([...currentHeroesWithoutCurrentHero])
-		return of({ message: 'Hero removed successfully!' })
+		return this.#of({ message: 'Hero removed successfully!' })
 	}
 
 	#getHeroesFromData(): void {
 		// console.log('set initial heroes')
 		const heroes: Hero[] = heroesData.map((hero: HeroFromData) => heroAdapter(hero))
 		this.#heroes.next(heroes)
+	}
+
+	#of<T>(value: T): Observable<T> {
+		return of(value).pipe(
+			tap(() => this.#loaderService.turnOnLoader()),
+			delay(1500),
+			finalize(() => this.#loaderService.turnOffLoader()),
+		)
 	}
 }
