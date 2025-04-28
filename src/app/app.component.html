@@ -12,5 +12,7 @@
 	</mat-toolbar>
 
 	<!-- Router Outlet -->
-	<router-outlet />
+	<app-loader [loading]="loading()" background minHeight="calc(100dvh - 64px)">
+		<router-outlet />
+	</app-loader>
 </main>
