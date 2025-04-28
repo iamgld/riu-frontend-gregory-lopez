@@ -56,14 +56,17 @@ export class EditHeroComponent {
 	readonly Number = Number
 
 	form: FormGroup<Form> = this.#fb.group<Form>({
-		id: this.#fb.control('', {
-			validators: [
-				Validators.required,
-				Validators.min(0),
-				Validators.max(9999),
-				isNaturalNumberValidator(),
-			],
-		}),
+		id: this.#fb.control(
+			{ value: '', disabled: true },
+			{
+				validators: [
+					Validators.required,
+					Validators.min(0),
+					Validators.max(9999),
+					isNaturalNumberValidator(),
+				],
+			},
+		),
 		slug: this.#fb.control('', { validators: [Validators.required, isSlugValidator()] }),
 		name: this.#fb.control('', {
 			validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
