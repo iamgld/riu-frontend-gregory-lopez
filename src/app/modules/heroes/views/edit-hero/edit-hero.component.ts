@@ -103,7 +103,7 @@ export class EditHeroComponent {
 	submit() {
 		if (this.form.valid) {
 			const hero: Hero = {
-				id: Number(this.form.value.id),
+				id: this.heroId(),
 				name: this.form.value.name ?? '',
 				slug: this.form.value.slug ?? '',
 				gender: this.form.value.gender as HeroGender,
