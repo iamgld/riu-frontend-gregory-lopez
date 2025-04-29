@@ -53,7 +53,7 @@ export class NewHeroComponent {
 		name: this.#fb.control('angel dust', {
 			validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
 		}),
-		gender: this.#fb.control('female', { validators: [Validators.required] }),
+		gender: this.#fb.control(HeroGender.female, { validators: [Validators.required] }),
 		image: this.#fb.control('https://imagen.com', {
 			validators: [Validators.required, isUrlValidator()],
 		}),
