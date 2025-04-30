@@ -13,6 +13,8 @@
 		"start:prod": "ng serve --configuration production",
 		"test": "jest",
 		"test:watch": "jest --watchAll",
+		"test:coverage": "jest --coverage",
+		"test:coverage:open": "open coverage/lcov-report/index.html",
 		"build": "npm run build:prod",
 		"build:dev": "ng build --configuration development --progress",
 		"build:stag": "ng build --configuration staging --progress",
