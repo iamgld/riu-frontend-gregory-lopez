@@ -1,8 +1,5 @@
 @use 'styles';
 
-// .app {
-// }
-
 .toolbar {
 	&__section {
 		max-width: var(--gld-max-width);
@@ -10,15 +7,49 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 
 		&__title {
 			margin: 0;
 			font: 600 var(--gld-font-size--heading-two) / var(--gld-line-height) var(--gld-font--poppins);
 			cursor: pointer;
 		}
-	}
 
-	&__spacer {
-		flex: 1 1 auto;
+		&__brand {
+			--gld-color: inherit;
+			--gld-background: transparent;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: var(--gld-background);
+			color: var(--gld-color);
+			border-radius: var(--gld-radius--xxs);
+			cursor: pointer;
+			outline: none;
+			user-select: none;
+			padding: var(--gld-spacing--xxs);
+
+			&:focus,
+			&:hover {
+				--gld-color: var(--gld-blue);
+				--gld-background: var(--gld-blue-transparent--010);
+			}
+
+			app-image {
+				width: 40px;
+				height: 40px;
+				aspect-ratio: 1/1;
+				border-radius: 50%;
+			}
+
+			span {
+				font-size: var(--gld-font-size--heading-two);
+				font-family: var(--gld-font--megrim);
+				line-height: var(--gld-line-height);
+				font-weight: 900;
+				text-transform: lowercase;
+			}
+		}
 	}
 }

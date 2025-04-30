@@ -4,10 +4,23 @@
 		<section class="toolbar__section">
 			<h1 routerLink="/heroes" class="toolbar__section__title">Heroes</h1>
 
-			<span class="toolbar__spacer"></span>
+			<!-- Brand -->
+			@defer {
+				<section
+					tabindex="0"
+					class="toolbar__section__brand"
+					(click)="navigateToIamgld()"
+					(keyup.enter)="navigateToIamgld()"
+				>
+					<app-image priority src="{{ iamgldFaceImage().src }}" alt="{{ iamgldFaceImage().alt }}" />
+					<span>iamgld</span>
+				</section>
+			}
 
-			<button mat-button routerLink="/heroes">heroes</button>
-			<button mat-button routerLink="/heroes/new">new hero</button>
+			<section class="toolbar__section__actions">
+				<button mat-button routerLink="/heroes">heroes</button>
+				<button mat-button routerLink="/heroes/new">new hero</button>
+			</section>
 		</section>
 	</mat-toolbar>
 

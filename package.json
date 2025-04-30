@@ -80,7 +80,8 @@
 			"@app/(.)": "<rootDir>/src/app/$1",
 			"@src/(.)": "<rootDir>/src/$1",
 			"@shared/(.*)$": "<rootDir>/src/app/shared/$1",
-			"@heroes/(.*)$": "<rootDir>/src/app/modules/heroes/$1"
+			"@heroes/(.*)$": "<rootDir>/src/app/modules/heroes/$1",
+			"@environment": "<rootDir>/src/environments/environment.local.ts"
 		}
 	}
 }
