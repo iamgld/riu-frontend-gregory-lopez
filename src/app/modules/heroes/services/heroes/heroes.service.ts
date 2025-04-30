@@ -25,9 +25,9 @@ export class HeroesService {
 
 		const heroesFiltered = this.#heroes.value.filter(
 			(_hero) =>
-				String(_hero.id).includes(filterBy) ||
-				String(_hero.slug).includes(filterBy) ||
-				String(_hero.name).includes(filterBy),
+				String(_hero.id).toLowerCase().includes(filterBy.toLowerCase()) ||
+				String(_hero.slug).toLowerCase().includes(filterBy.toLowerCase()) ||
+				String(_hero.name).toLowerCase().includes(filterBy.toLowerCase()),
 		)
 		return this.#of({ heroes: heroesFiltered })
 	}
