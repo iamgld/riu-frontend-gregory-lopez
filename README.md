@@ -40,6 +40,15 @@ La aplicación estará disponible en [http://localhost:4200](http://localhost:42
 - `pnpm build`: Compila la aplicación para producción.
 - `pnpm test`: Ejecuta los tests unitarios.
 - `pnpm linter`: Ejecuta los linters y el formateador.
+- `pnpm coverage`: Genera el reporte de cobertura de tests.
+
+## Coverage
+
+El reporte HTML estará disponible en `coverage/lcov-report/index.html`. Puedes abrir este archivo en tu navegador para visualizar el detalle de la cobertura de código.
+
+```sh
+pnpm coverage:open
+```
 
 ## Estructura principal
 
