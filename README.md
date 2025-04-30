@@ -68,14 +68,14 @@ pnpm coverage:open
   - [x] Consultar todos los superhéroes que contienen en su nombre el valor de la búsqueda (por ejemplo, si buscamos “man” debe devolver “spiderman”, “superman”, “manolito el fuerte”)
   - [x] Modificar un superhéroe
   - [x] Eliminar un superhéroe
-  - [ ] Test unitario de este servicio
+  - [x] Test unitario de este servicio
 - [x] **Crear un componente donde se consuma el servicio anterior:**
   - [x] Mostrar una lista paginada de héroes donde aparecerán botones de añadir, editar y eliminar
   - [x] Encima de la lista paginada debe haber un campo que permita hacer búsquedas
   - [x] Al pulsar el botón de añadir se debe mostrar un formulario vacío con las validaciones para agregar un nuevo héroe. Al agregar el nuevo héroe se debe volver a la página de héroes
   - [x] Al pulsar el botón de editar se debe mostrar un formulario con los datos del héroe seleccionado y permitir modificar su información. Al editar el héroe se debe volver a la página de héroes
   - [x] Al pulsar el botón de eliminar se debe preguntar si está seguro usando un diálogo y, al confirmar, se debe eliminar el héroe de la lista
-  - [ ] Test unitario de este componente
+  - [x] Test unitario de este componente
 
 ## Puntos adicionales implementados
 
