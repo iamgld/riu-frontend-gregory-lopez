@@ -4,4 +4,5 @@ import { IEnvironment, EEnvironment } from '@shared/models'
 export const environment: IEnvironment = {
 	environment: EEnvironment.local,
 	production: false,
+	cloudflareIamgldAssetsBucket: 'https://assets.iamgld.dev',
 }

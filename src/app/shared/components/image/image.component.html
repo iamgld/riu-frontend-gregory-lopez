@@ -1,0 +1,5 @@
+@if (priority()) {
+	<img fill priority alt="{{ alt() }}" [ngSrc]="src()" />
+} @else {
+	<img fill alt="{{ alt() }}" [ngSrc]="src()" loading="lazy" />
+}

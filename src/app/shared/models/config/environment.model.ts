@@ -1,6 +1,7 @@
 export interface IEnvironment {
 	environment: EEnvironment
 	production: boolean
+	cloudflareIamgldAssetsBucket: string
 }
 
 export enum EEnvironment {
