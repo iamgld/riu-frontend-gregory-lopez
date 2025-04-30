@@ -48,4 +48,26 @@ describe('HeroComponent', () => {
 	test('should be create', () => {
 		expect(component).toBeTruthy()
 	})
+
+	test('should add alias', () => {
+		const event = { value: 'new-alias', chipInput: { clear: jest.fn() } }
+		component.aliases.set([])
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		component.addAlias(event as any)
+		expect(component.aliases().includes('new-alias')).toBe(true)
+	})
+
+	test('should remove alias', () => {
+		component.aliases.set(['alias1', 'alias2'])
+		component.removeAlias('alias1')
+		expect(component.aliases()).toEqual(['alias2'])
+	})
+
+	test('should edit alias', () => {
+		component.aliases.set(['alias1', 'alias2'])
+		const event = { value: 'edited-alias' }
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		component.editAlias('alias1', event as any)
+		expect(component.aliases()).toEqual(['edited-alias', 'alias2'])
+	})
 })

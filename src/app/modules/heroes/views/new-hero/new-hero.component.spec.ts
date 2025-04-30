@@ -15,7 +15,7 @@ describe('NewHeroComponent', () => {
 	let fixture: ComponentFixture<NewHeroComponent>
 
 	const mockHeroesService = {
-		/* agrega métodos mock si es necesario */
+		addHero: jest.fn(),
 	}
 	const mockLoaderService = { turnOnLoader: jest.fn(), turnOffLoader: jest.fn() }
 	const mockRouter = { navigate: jest.fn() }
@@ -42,4 +42,90 @@ describe('NewHeroComponent', () => {
 	test('should be create', () => {
 		expect(component).toBeTruthy()
 	})
+
+	test('should have invalid form when required fields are empty', () => {
+		component.form.controls.id.setValue('')
+		component.form.controls.name.setValue('')
+		component.form.controls.slug.setValue('')
+		component.form.controls.gender.setValue('')
+		component.form.controls.image.setValue('')
+		component.form.controls.work.setValue('')
+		component.form.controls.biography.controls.fullName.setValue('')
+		component.form.controls.biography.controls.alterEgos.setValue('')
+		component.form.controls.biography.controls.firstAppearance.setValue('')
+		component.form.controls.biography.controls.publisher.setValue('')
+		expect(component.form.valid).toBe(false)
+	})
+
+	test('should add alias', () => {
+		const event = { value: 'new-alias', chipInput: { clear: jest.fn() } }
+		component.aliases.set([])
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		component.addAlias(event as any)
+		expect(component.aliases().includes('new-alias')).toBe(true)
+	})
+
+	test('should remove alias', () => {
+		component.aliases.set(['alias1', 'alias2'])
+		component.removeAlias('alias1')
+		expect(component.aliases()).toEqual(['alias2'])
+	})
+
+	test('should call addHero and navigate on valid submit', () => {
+		component.form.controls.id.setValue('123')
+		component.form.controls.name.setValue('Batman')
+		component.form.controls.slug.setValue('batman')
+		component.form.controls.gender.setValue('male')
+		component.form.controls.image.setValue('https://image.com')
+		component.form.controls.work.setValue('Detective')
+		component.form.controls.biography.controls.fullName.setValue('Bruce Wayne')
+		component.form.controls.biography.controls.alterEgos.setValue('Matches Malone')
+		component.form.controls.biography.controls.firstAppearance.setValue('Detective Comics #27')
+		component.form.controls.biography.controls.publisher.setValue('DC Comics')
+		component.aliases.set(['alias1'])
+		mockHeroesService.addHero = jest.fn(() => ({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			pipe: () => ({ subscribe: ({ next }: any) => next({ message: 'ok' }) }),
+		}))
+		component.submit()
+		expect(mockHeroesService.addHero).toHaveBeenCalled()
+		expect(mockRouter.navigate).toHaveBeenCalledWith(['/heroes'])
+	})
+
+	test('should mark form as touched if invalid on submit', () => {
+		component.form.controls.id.setValue('')
+		const markAllAsTouchedSpy = jest.spyOn(component.form, 'markAllAsTouched')
+		component.submit()
+		expect(markAllAsTouchedSpy).toHaveBeenCalled()
+	})
+
+	// test('should handle error on addHero (id exists)', () => {
+	// 	mockHeroesService.addHero = jest.fn(() => ({
+	// 		pipe: () => ({
+	// 			subscribe: ({ next, error }: any) => error({ errorCode: 'id', message: 'ID exists' }),
+	// 		}),
+	// 	}))
+	// 	fixture = TestBed.createComponent(NewHeroComponent)
+	// 	component = fixture.componentInstance
+	// 	fixture.detectChanges()
+
+	// 	component.form.controls.id.setValue('1')
+	// 	component.form.controls.name.setValue('Batman')
+	// 	component.form.controls.slug.setValue('batman')
+	// 	component.form.controls.gender.setValue('male')
+	// 	component.form.controls.image.setValue('https://image.com')
+	// 	component.form.controls.work.setValue('Detective')
+	// 	component.form.controls.biography.controls.fullName.setValue('Bruce Wayne')
+	// 	component.form.controls.biography.controls.alterEgos.setValue('Matches Malone')
+	// 	component.form.controls.biography.controls.firstAppearance.setValue('Detective Comics #27')
+	// 	component.form.controls.biography.controls.publisher.setValue('DC Comics')
+	// 	component.aliases.set(['alias1'])
+	// 	component.submit()
+	// 	expect(component.form.controls.id.value).toBe('111')
+	// 	expect(component.form.controls.id.touched).toBe(true)
+	// 	expect(mockSnackBar.open).toHaveBeenCalledWith('ID exists', '', {
+	// 		duration: 8000,
+	// 		panelClass: ['snackbar-red'],
+	// 	})
+	// })
 })
