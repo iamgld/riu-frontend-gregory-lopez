@@ -26,6 +26,8 @@
 			"@environment": ["src/environments/environment.local.ts"],
 			// Shared Paths
 			"@shared/*": ["src/app/shared/*"],
+			// Heroes
+			"@heroes/*": ["src/app/modules/heroes/*"]
 		},
 		"useDefineForClassFields": false
 	},

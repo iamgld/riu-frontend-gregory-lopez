@@ -1,3 +1,1 @@
-// ----------Modules----------
-export * from './components.module'
-// ----------Components----------
+export { LoaderComponent } from './loader/loader.component'

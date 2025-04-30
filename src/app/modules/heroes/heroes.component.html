@@ -1,0 +1,81 @@
+<main class="heroes">
+	<!-- Header -->
+	<header class="heroes__header">
+		<h2 class="heroes__title">Type a name and search your favorite hero</h2>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Search your hero</mat-label>
+			<input
+				#searchElement
+				matInput
+				name="search"
+				aria-label="search"
+				placeholder="Batman..."
+				[formControl]="searchControl"
+			/>
+		</mat-form-field>
+	</header>
+
+	<!-- Table -->
+	<table mat-table [dataSource]="dataSources()" class="heroes__table">
+		<!-- Position Column -->
+		<ng-container matColumnDef="id">
+			<th mat-header-cell *matHeaderCellDef>ID</th>
+			<td mat-cell *matCellDef="let element">{{ element.id }}</td>
+		</ng-container>
+
+		<!-- Name Column -->
+		<ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef>Name</th>
+			<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+		</ng-container>
+
+		<!-- Gender Column -->
+		<ng-container matColumnDef="gender">
+			<th mat-header-cell *matHeaderCellDef>Gender</th>
+			<td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+		</ng-container>
+
+		<!-- Actions Column -->
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef>Actions</th>
+			<td mat-cell *matCellDef="let element">
+				<section class="heroes__table__actions">
+					<!-- View Hero -->
+					<button
+						mat-icon-button
+						color="primary"
+						matTooltip="View Hero"
+						(click)="viewHero({ heroId: element.id })"
+					>
+						<mat-icon>visibility</mat-icon>
+					</button>
+					<!-- Edit Hero -->
+					<button
+						mat-icon-button
+						color="primary"
+						matTooltip="Edit Hero"
+						(click)="editHero({ heroId: element.id })"
+					>
+						<mat-icon>edit</mat-icon>
+					</button>
+					<!-- Remove Hero -->
+					<button
+						mat-icon-button
+						color="warn"
+						matTooltip="Remove Hero"
+						(click)="openRemoveHeroDialog({ heroId: element.id })"
+					>
+						<mat-icon>delete</mat-icon>
+					</button>
+				</section>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+
+	<!-- Pagination -->
+	<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator>
+</main>

@@ -9,3 +9,14 @@
     4. solo afecta a una pieza del DOM a la vez
     5. especificidad por lo regular alta
 */
+
+::ng-deep .mdc-snackbar {
+	&.snackbar-green .mat-mdc-snackbar-surface {
+		background: var(--gld-green) !important;
+		color: var(--gld-whitelight) !important;
+	}
+	&.snackbar-red .mat-mdc-snackbar-surface {
+		background: var(--gld-red) !important;
+		color: var(--gld-whitelight) !important;
+	}
+}

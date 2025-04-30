@@ -56,8 +56,9 @@
 						},
 						"assets": ["src/favicon.ico", "src/assets"],
 						"styles": [
-							"src/index.scss"
-						],
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/index.scss"
+            ],
 						"stylePreprocessorOptions": {
 							"includePaths": ["./src/app/styles"]
 						},

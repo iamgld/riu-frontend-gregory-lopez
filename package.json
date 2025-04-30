@@ -13,6 +13,8 @@
 		"start:prod": "ng serve --configuration production",
 		"test": "jest",
 		"test:watch": "jest --watchAll",
+		"coverage": "jest --coverage",
+		"coverage:open": "open coverage/lcov-report/index.html",
 		"build": "npm run build:prod",
 		"build:dev": "ng build --configuration development --progress",
 		"build:stag": "ng build --configuration staging --progress",
@@ -76,7 +78,9 @@
 		],
 		"moduleNameMapper": {
 			"@app/(.)": "<rootDir>/src/app/$1",
-			"@src/(.)": "<rootDir>/src/$1"
+			"@src/(.)": "<rootDir>/src/$1",
+			"@shared/(.*)$": "<rootDir>/src/app/shared/$1",
+			"@heroes/(.*)$": "<rootDir>/src/app/modules/heroes/$1"
 		}
 	}
 }

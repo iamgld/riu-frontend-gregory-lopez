@@ -1,0 +1,37 @@
+.edit {
+	max-width: var(--gld-max-width);
+	margin-inline: auto;
+	padding: var(--gld-spacing--l) var(--gld-spacing--m);
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: var(--gld-spacing--m);
+
+		&--center {
+			justify-content: center;
+		}
+	}
+
+	&__title {
+		margin: 0;
+		font: 600 var(--gld-font-size--heading-two) / var(--gld-line-height) var(--gld-font--poppins);
+	}
+
+	&__subtitle {
+		margin-bottom: var(--gld-spacing--s);
+		font: 400 var(--gld-font-size--heading-three) / var(--gld-line-height) var(--gld-font--poppins);
+	}
+
+	&__form {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--gld-spacing--m);
+		margin-bottom: var(--gld-spacing--s);
+
+		.span-2 {
+			grid-column: span 2;
+		}
+	}
+}

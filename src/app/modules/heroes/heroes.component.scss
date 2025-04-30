@@ -1,0 +1,59 @@
+.heroes {
+	max-width: var(--gld-max-width);
+	margin-inline: auto;
+	padding: var(--gld-spacing--l) var(--gld-spacing--m);
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: var(--gld-spacing--m);
+	}
+
+	&__title {
+		margin: 0;
+		margin-bottom: var(--gld-spacing--m);
+		font: 400 var(--gld-font-size--heading-three) / var(--gld-line-height) var(--gld-font--poppins);
+	}
+
+	&__table {
+		width: 100%;
+
+		&__actions {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: var(--gld-spacing--xxxs);
+		}
+	}
+}
+
+.mat-column-id,
+.mat-column-name,
+.mat-column-gender {
+	border-right: 1px solid var(--gld-darkblue-transparent--040);
+	padding: var(--gld-spacing--s);
+}
+
+.mat-column-id {
+	width: 60px;
+	text-align: center;
+}
+
+.mat-column-name {
+	width: 200px;
+}
+
+.mat-column-gender {
+	width: auto;
+}
+
+.mat-column-actions {
+	width: 150px;
+	text-align: center;
+	padding: 0;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+	border-bottom-color: var(--gld-darkblue-transparent--040);
+}
