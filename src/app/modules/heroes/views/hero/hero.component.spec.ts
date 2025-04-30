@@ -1,14 +1,43 @@
+// Angular Imports
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { Router } from '@angular/router'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatDialog } from '@angular/material/dialog'
+// This Component Imports
 import { HeroComponent } from './hero.component'
+// This Module Imports
+import { HeroesService } from '@heroes/services'
+import { LoaderService } from '@shared/services'
+// Shared Imports
+import { MaterialModule } from '@shared/modules'
 
 describe('HeroComponent', () => {
 	let component: HeroComponent
 	let fixture: ComponentFixture<HeroComponent>
 
+	const mockHeroesService = {
+		getHero: jest.fn(),
+		getHeroes: jest.fn(),
+		addHero: jest.fn(),
+		editHero: jest.fn(),
+		removeHero: jest.fn(),
+	}
+	const mockLoaderService = { turnOnLoader: jest.fn(), turnOffLoader: jest.fn() }
+	const mockRouter = { navigate: jest.fn() }
+	const mockSnackBar = { open: jest.fn() }
+	const mockDialog = { open: jest.fn() }
+
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [HeroComponent],
+			imports: [MaterialModule, HeroComponent, NoopAnimationsModule],
+			providers: [
+				{ provide: HeroesService, useValue: mockHeroesService },
+				{ provide: LoaderService, useValue: mockLoaderService },
+				{ provide: Router, useValue: mockRouter },
+				{ provide: MatSnackBar, useValue: mockSnackBar },
+				{ provide: MatDialog, useValue: mockDialog },
+			],
 		}).compileComponents()
 
 		fixture = TestBed.createComponent(HeroComponent)
@@ -16,7 +45,7 @@ describe('HeroComponent', () => {
 		fixture.detectChanges()
 	})
 
-	it('should create', () => {
+	test('should be create', () => {
 		expect(component).toBeTruthy()
 	})
 })
