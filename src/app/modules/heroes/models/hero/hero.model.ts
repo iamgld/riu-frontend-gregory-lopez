@@ -1,20 +1,3 @@
-// Hero Example
-// {
-// 	id: 9,
-// 	name: 'Ajax',
-// 	slug: '9-ajax',
-// 	gender: 'male',
-// 	image: 'https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/9-ajax.jpg',
-// 	work: 'Enforcer',
-// 	biography: {
-// 		fullName: 'Francis',
-// 		alterEgos: 'No alter egos found.',
-// 		aliases: ['Francis'],
-// 		firstAppearance: 'Deadpool #14 (1998)',
-// 		publisher: 'Marvel Comics',
-// 	},
-// }
-
 export interface Hero {
 	id: number
 	name: string

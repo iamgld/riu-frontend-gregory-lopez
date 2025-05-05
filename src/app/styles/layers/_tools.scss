@@ -100,7 +100,6 @@
 	&::-webkit-scrollbar-thumb {
 		background-color: var(--green); // color of the scroll thumb
 		border-radius: var(--radius--s); // roundness of the scroll thumb
-		// border: 2px solid Palette(Primary); // creates padding around scroll thumb
 	}
 
 	overflow: auto;

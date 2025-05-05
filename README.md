@@ -8,6 +8,22 @@ Este proyecto es una aplicación Angular para la gestión de héroes, desarrolla
 - pnpm >= 10.x
 - Angular CLI >= 18.x
 
+## Estructura principal
+
+- `src/app/modules/heroes`: Módulo principal de gestión de héroes.
+- `src/app/shared`: Componentes y utilidades compartidas.
+- `src/styles`: Estilos globales y variables.
+
+## Scripts útiles
+
+- `pnpm start` : Levanta el servidor de desarrollo.
+- `pnpm build`: Compila la aplicación para producción.
+- `pnpm test`: Ejecuta los tests unitarios.
+- `pnpm linter`: Ejecuta los linters y el formateador.
+- `pnpm coverage`: Genera el reporte de cobertura de tests.
+- `pnpm docker:create-image`: Crea la imagen del proyecto.
+- `pnpm docker:up-image`: Levanta la imagen anteriormente creada.
+
 ## Instalación
 
 1. Clona el repositorio:
@@ -34,29 +50,43 @@ pnpm start
 
 La aplicación estará disponible en [http://localhost:4200](http://localhost:4200).
 
-## Scripts útiles
+## Levantar el proyecto con Docker
 
-- `pnpm start` : Levanta el servidor de desarrollo.
-- `pnpm build`: Compila la aplicación para producción.
-- `pnpm test`: Ejecuta los tests unitarios.
-- `pnpm linter`: Ejecuta los linters y el formateador.
-- `pnpm coverage`: Genera el reporte de cobertura de tests.
+Si querés levantar la app directamente desde el `Dockerfile`, podés seguir estos pasos:
 
-## Coverage
+### 1. Asegúrate de tener docker corriendo en tu maquina
 
-El reporte HTML estará disponible en `coverage/lcov-report/index.html`. Puedes abrir este archivo en tu navegador para visualizar el detalle de la cobertura de código.
+### 2. Construir la imagen
+
+```sh
+docker build -t riu-app . || pnpm docker:create-image
+```
+
+Esto genera una imagen Docker a partir del Dockerfile en la raíz del proyecto.
+
+### 3. Ejecutar el contenedor y exponer la app
+
+```sh
+docker run -p 3000:3000 riu-app || pnpm docker:up-image
+```
+
+Esto expone la app en http://localhost:3000.
+
+## Revisar el coverage del proyecto
+
+### 1. Correr el comando que genera el reporte de coverage
+
+```sh
+pnpm coverage
+```
+
+### 2. Ver el reporte de coverage generado
 
 ```sh
 pnpm coverage:open
 ```
 
-## Estructura principal
-
-- `src/app/modules/heroes`: Módulo principal de gestión de héroes.
-- `src/app/shared`: Componentes y utilidades compartidas.
-- `src/styles`: Estilos globales y variables.
-
----
+El reporte HTML estará disponible en `coverage/lcov-report/index.html`. Puedes abrir este archivo en tu navegador para visualizar el detalle de la cobertura de código.
 
 ## Puntos principales del reto
 

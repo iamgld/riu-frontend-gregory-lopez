@@ -193,7 +193,6 @@ export class HeroComponent {
 			.pipe(takeUntilDestroyed(this.#destroyRef))
 			.subscribe({
 				next: ({ hero }) => {
-					// console.log('hero', hero)
 					this.currentHero.set(hero)
 					this.#updateForm({ hero })
 				},

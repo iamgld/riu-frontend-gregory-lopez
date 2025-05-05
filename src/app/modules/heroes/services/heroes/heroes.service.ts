@@ -106,7 +106,6 @@ export class HeroesService {
 	}
 
 	#getHeroesFromData(): void {
-		// console.log('set initial heroes')
 		const heroes: Hero[] = heroesData.map((hero: HeroFromData) => heroAdapter(hero))
 		this.#heroes.next(heroes)
 	}
