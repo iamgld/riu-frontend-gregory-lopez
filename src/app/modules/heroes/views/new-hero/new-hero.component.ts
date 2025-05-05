@@ -38,10 +38,10 @@ export class NewHeroComponent {
 	readonly HeroGender = HeroGender
 	readonly addOnBlur = true
 	readonly separatorKeysCodes = [ENTER, COMMA] as const
-	readonly aliases = signal<string[]>(['batman'])
+	readonly aliases = signal<string[]>([])
 
 	form: FormGroup<Form> = this.#fb.group<Form>({
-		id: this.#fb.control('111', {
+		id: this.#fb.control('', {
 			validators: [
 				Validators.required,
 				Validators.min(0),
@@ -49,28 +49,28 @@ export class NewHeroComponent {
 				isNaturalNumberValidator(),
 			],
 		}),
-		slug: this.#fb.control('111-angel', { validators: [Validators.required, isSlugValidator()] }),
-		name: this.#fb.control('angel dust', {
+		slug: this.#fb.control('', { validators: [Validators.required, isSlugValidator()] }),
+		name: this.#fb.control('', {
 			validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
 		}),
-		gender: this.#fb.control(HeroGender.female, { validators: [Validators.required] }),
-		image: this.#fb.control('https://imagen.com', {
+		gender: this.#fb.control('', { validators: [Validators.required] }),
+		image: this.#fb.control('', {
 			validators: [Validators.required, isUrlValidator()],
 		}),
-		work: this.#fb.control('mercenary', {
+		work: this.#fb.control('', {
 			validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
 		}),
 		biography: this.#fb.group<FormBiography>({
-			fullName: this.#fb.control('chistina dust', {
+			fullName: this.#fb.control('', {
 				validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
 			}),
-			alterEgos: this.#fb.control('archangel', {
+			alterEgos: this.#fb.control('', {
 				validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
 			}),
-			firstAppearance: this.#fb.control('moclock 2001', {
+			firstAppearance: this.#fb.control('', {
 				validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
 			}),
-			publisher: this.#fb.control('marvel commig', {
+			publisher: this.#fb.control('', {
 				validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
 			}),
 		}),
