@@ -34,6 +34,28 @@ pnpm start
 
 La aplicación estará disponible en [http://localhost:4200](http://localhost:4200).
 
+## Levantar el proyecto con Docker
+
+Si querés levantar la app directamente desde el `Dockerfile`, podés seguir estos pasos:
+
+### 1. Asegúrate de tener docker corriendo en tu maquina
+
+### 2. Construir la imagen
+
+```sh
+docker build -t riu-app . || pnpm docker:create-image
+```
+
+Esto genera una imagen Docker a partir del Dockerfile en la raíz del proyecto.
+
+### 3. Ejecutar el contenedor y exponer la app
+
+```sh
+docker run -p 3000:3000 riu-app || pnpm docker:up-image
+```
+
+Esto expone la app en http://localhost:3000.
+
 ## Scripts útiles
 
 - `pnpm start` : Levanta el servidor de desarrollo.
@@ -41,6 +63,8 @@ La aplicación estará disponible en [http://localhost:4200](http://localhost:42
 - `pnpm test`: Ejecuta los tests unitarios.
 - `pnpm linter`: Ejecuta los linters y el formateador.
 - `pnpm coverage`: Genera el reporte de cobertura de tests.
+- `pnpm docker:create-image`: Crea la imagen del proyecto.
+- `pnpm docker:up-image`: Levanta la imagen anteriormente creada.
 
 ## Coverage
 

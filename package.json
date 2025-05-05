@@ -11,6 +11,8 @@
 		"start:host": "ng serve --configuration development --host 0.0.0.0",
 		"start:stag": "ng serve --configuration staging",
 		"start:prod": "ng serve --configuration production",
+		"docker:create-image": "docker build -t riu-app .",
+		"docker:up-image": "docker run -p 3000:3000 riu-app",
 		"test": "jest",
 		"test:watch": "jest --watchAll",
 		"coverage": "jest --coverage",
