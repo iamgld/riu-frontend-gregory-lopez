@@ -98,34 +98,4 @@ describe('NewHeroComponent', () => {
 		component.submit()
 		expect(markAllAsTouchedSpy).toHaveBeenCalled()
 	})
-
-	// test('should handle error on addHero (id exists)', () => {
-	// 	mockHeroesService.addHero = jest.fn(() => ({
-	// 		pipe: () => ({
-	// 			subscribe: ({ next, error }: any) => error({ errorCode: 'id', message: 'ID exists' }),
-	// 		}),
-	// 	}))
-	// 	fixture = TestBed.createComponent(NewHeroComponent)
-	// 	component = fixture.componentInstance
-	// 	fixture.detectChanges()
-
-	// 	component.form.controls.id.setValue('1')
-	// 	component.form.controls.name.setValue('Batman')
-	// 	component.form.controls.slug.setValue('batman')
-	// 	component.form.controls.gender.setValue('male')
-	// 	component.form.controls.image.setValue('https://image.com')
-	// 	component.form.controls.work.setValue('Detective')
-	// 	component.form.controls.biography.controls.fullName.setValue('Bruce Wayne')
-	// 	component.form.controls.biography.controls.alterEgos.setValue('Matches Malone')
-	// 	component.form.controls.biography.controls.firstAppearance.setValue('Detective Comics #27')
-	// 	component.form.controls.biography.controls.publisher.setValue('DC Comics')
-	// 	component.aliases.set(['alias1'])
-	// 	component.submit()
-	// 	expect(component.form.controls.id.value).toBe('111')
-	// 	expect(component.form.controls.id.touched).toBe(true)
-	// 	expect(mockSnackBar.open).toHaveBeenCalledWith('ID exists', '', {
-	// 		duration: 8000,
-	// 		panelClass: ['snackbar-red'],
-	// 	})
-	// })
 })

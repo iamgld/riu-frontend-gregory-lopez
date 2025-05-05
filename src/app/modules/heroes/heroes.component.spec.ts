@@ -90,22 +90,6 @@ describe('HeroesComponent', () => {
 		expect(actionButtons.length).toBe(mockHeroes.length * 3)
 	}))
 
-	// FIXME:
-	// test('should filter heroes when typing in the search input', fakeAsync(() => {
-	// 	fixture.detectChanges()
-	// 	tick()
-	// 	expect(
-	// 		fixture.nativeElement.querySelectorAll('table.heroes__table tr.mat-mdc-row').length,
-	// 	).toBe(2)
-	// 	component.searchControl.setValue('batman')
-	// 	// tick(500)
-	// 	fixture.detectChanges()
-
-	// 	const rows = fixture.nativeElement.querySelectorAll('table.heroes__table tr.mat-mdc-row')
-	// 	expect(rows.length).toBe(1)
-	// 	expect(rows[0].textContent).toContain('Batman')
-	// }))
-
 	test('should call viewHero when clicking the view button', fakeAsync(() => {
 		jest.spyOn(component, 'viewHero')
 		fixture.detectChanges()
