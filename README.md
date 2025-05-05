@@ -8,6 +8,22 @@ Este proyecto es una aplicación Angular para la gestión de héroes, desarrolla
 - pnpm >= 10.x
 - Angular CLI >= 18.x
 
+## Estructura principal
+
+- `src/app/modules/heroes`: Módulo principal de gestión de héroes.
+- `src/app/shared`: Componentes y utilidades compartidas.
+- `src/styles`: Estilos globales y variables.
+
+## Scripts útiles
+
+- `pnpm start` : Levanta el servidor de desarrollo.
+- `pnpm build`: Compila la aplicación para producción.
+- `pnpm test`: Ejecuta los tests unitarios.
+- `pnpm linter`: Ejecuta los linters y el formateador.
+- `pnpm coverage`: Genera el reporte de cobertura de tests.
+- `pnpm docker:create-image`: Crea la imagen del proyecto.
+- `pnpm docker:up-image`: Levanta la imagen anteriormente creada.
+
 ## Instalación
 
 1. Clona el repositorio:
@@ -56,31 +72,21 @@ docker run -p 3000:3000 riu-app || pnpm docker:up-image
 
 Esto expone la app en http://localhost:3000.
 
-## Scripts útiles
+## Revisar el coverage del proyecto
 
-- `pnpm start` : Levanta el servidor de desarrollo.
-- `pnpm build`: Compila la aplicación para producción.
-- `pnpm test`: Ejecuta los tests unitarios.
-- `pnpm linter`: Ejecuta los linters y el formateador.
-- `pnpm coverage`: Genera el reporte de cobertura de tests.
-- `pnpm docker:create-image`: Crea la imagen del proyecto.
-- `pnpm docker:up-image`: Levanta la imagen anteriormente creada.
+### 1. Correr el comando que genera el reporte de coverage
 
-## Coverage
+```sh
+pnpm coverage
+```
 
-El reporte HTML estará disponible en `coverage/lcov-report/index.html`. Puedes abrir este archivo en tu navegador para visualizar el detalle de la cobertura de código.
+### 2. Ver el reporte de coverage generado
 
 ```sh
 pnpm coverage:open
 ```
 
-## Estructura principal
-
-- `src/app/modules/heroes`: Módulo principal de gestión de héroes.
-- `src/app/shared`: Componentes y utilidades compartidas.
-- `src/styles`: Estilos globales y variables.
-
----
+El reporte HTML estará disponible en `coverage/lcov-report/index.html`. Puedes abrir este archivo en tu navegador para visualizar el detalle de la cobertura de código.
 
 ## Puntos principales del reto
 
