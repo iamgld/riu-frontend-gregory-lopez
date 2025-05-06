@@ -18,6 +18,13 @@ describe('ImageComponent via HostComponent', () => {
 	let hostFixture: ComponentFixture<HostComponent>
 
 	beforeEach(async () => {
+		// Agrega el preconnect al head para evitar el warning de NgOptimizedImage
+		if (!document.head.querySelector('link[rel="preconnect"][href="https://assets.iamgld.dev"]')) {
+			const link = document.createElement('link')
+			link.rel = 'preconnect'
+			link.href = 'https://assets.iamgld.dev'
+			document.head.appendChild(link)
+		}
 		await TestBed.configureTestingModule({
 			imports: [ImageComponent, HostComponent],
 		}).compileComponents()
