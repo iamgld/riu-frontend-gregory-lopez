@@ -72,6 +72,10 @@ docker run -p 3000:3000 riu-app || pnpm docker:up-image
 
 Esto expone la app en http://localhost:3000.
 
+## Importante: evitar problemas con Docker usando .dockerignore
+
+Para asegurar que la imagen se construya correctamente y no se copien archivos innecesarios como node_modules, asegurate de tener el archivo .dockerignore en la raíz del proyecto. Esto evita errores comunes al copiar archivos al contenedor, como conflictos con dependencias locales o builds rotos por diferencias de entorno.
+
 ## Revisar el coverage del proyecto
 
 ### 1. Correr el comando que genera el reporte de coverage
