@@ -45,7 +45,9 @@ describe('HeroesComponent', () => {
 	const mockLoaderService = { turnOnLoader: jest.fn(), turnOffLoader: jest.fn() }
 
 	const mockDialog = {
-		open: jest.fn(),
+		open: jest.fn().mockReturnValue({
+			afterClosed: () => of(true),
+		}),
 	}
 
 	const mockSnackBar = {
@@ -109,7 +111,8 @@ describe('HeroesComponent', () => {
 	}))
 
 	test('should call openRemoveHeroDialog when clicking the remove button', fakeAsync(() => {
-		jest.spyOn(component, 'openRemoveHeroDialog')
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		jest.spyOn(component, 'openRemoveHeroDialog').mockImplementation(() => {})
 		fixture.detectChanges()
 		tick()
 		const removeBtn = fixture.debugElement.queryAll(By.css('button[matTooltip="Remove Hero"]'))[0]

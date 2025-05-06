@@ -1,0 +1,29 @@
+# Dependencias locales
+
+node_modules
+.pnpm-store
+
+# Build outputs
+
+dist
+coverage
+
+# Config y entornos locales
+
+.env
+.env.\*.local
+
+# Git y demás cosas
+
+.git
+.gitignore
+Dockerfile
+README.md
+
+# IDEs y temporales
+
+.vscode
+.idea
+_.log
+_.swp
+\*.tmp

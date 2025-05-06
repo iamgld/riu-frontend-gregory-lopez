@@ -11,13 +11,15 @@ import { HeroesService } from '@heroes/services'
 import { LoaderService } from '@shared/services'
 // Shared Imports
 import { MaterialModule } from '@shared/modules'
+// Thirdparty Imports
+import { of } from 'rxjs'
 
 describe('HeroComponent', () => {
 	let component: HeroComponent
 	let fixture: ComponentFixture<HeroComponent>
 
 	const mockHeroesService = {
-		getHero: jest.fn(),
+		getHero: jest.fn().mockReturnValue(of({})),
 		getHeroes: jest.fn(),
 		addHero: jest.fn(),
 		editHero: jest.fn(),
