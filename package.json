@@ -1,7 +1,7 @@
 {
 	"name": "riu-challenge",
 	"private": false,
-	"version": "6.2.0",
+	"version": "1.1.8",
 	"author": "Gregory López",
 	"homepage": "https://iamgld.dev",
 	"scripts": {
